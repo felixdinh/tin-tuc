@@ -1,6 +1,5 @@
 package com.example.news.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +15,10 @@ class NewsViewModel (
 ) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var prePage:String? = null
-    var nextPage:String? = null
+    var breakingNewsNextPage:String? = null
+
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var searchNextPage:String? = null
 
     init {
         getBreakingNews("vi")
@@ -25,16 +26,30 @@ class NewsViewModel (
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, nextPage)
+        val response = newsRepository.getBreakingNews(countryCode, breakingNewsNextPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
+    }
+
+    fun searchNews(search: String) = viewModelScope.launch {
+        breakingNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(search, searchNextPage)
+        breakingNews.postValue(handleSearchNewsResponse(response))
     }
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                Log.d("TAG", "handleBreakingNewsResponse: ${resultResponse}")
-                prePage = nextPage
-                nextPage = resultResponse.nextPage
+                breakingNewsNextPage = resultResponse.nextPage
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                searchNextPage = resultResponse.nextPage
                 return Resource.Success(resultResponse)
             }
         }

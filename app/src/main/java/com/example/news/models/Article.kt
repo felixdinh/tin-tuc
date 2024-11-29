@@ -3,20 +3,21 @@ package com.example.news.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "articles")
 data class Article(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    @ColumnInfo(name = "article_id")
+    @SerializedName("article_id")
     val articleId: String,
     val category: List<String>,
     val content: String,
     val country: List<String>,
-    val creator: String?,
+    val creator: List<String>?,
     val description: String,
     val duplicate: Boolean,
-    @ColumnInfo(name = "image_url")
+    @SerializedName( "image_url")
     val imageUrl: String,
     val keywords: List<String>?,
     val language: String?,
@@ -24,13 +25,13 @@ data class Article(
     val pubDate: String,
     val pubDateTZ: String,
     val sentiment: String,
-    @ColumnInfo(name = "source_icon")
+    @SerializedName("source_icon")
     val sourceIcon: String,
-    @ColumnInfo(name = "source_name")
+    @SerializedName( "source_name")
     val sourceName: String,
-    @ColumnInfo(name = "source_url")
+    @SerializedName("source_url")
     val sourceUrl: String,
     val title: String,
-    @ColumnInfo(name = "video_url")
+    @SerializedName("video_url")
     val videoUrl: String?
 )

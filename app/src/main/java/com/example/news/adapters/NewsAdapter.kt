@@ -1,5 +1,6 @@
 package com.example.news.adapters
 
+import android.util.Log
 import com.example.news.R
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.itemView.apply {
+            Log.d("adapter", "onBindViewHolder: ${article.sourceIcon}")
             Glide.with(this).load(article.imageUrl).into(findViewById<ImageView>(R.id.ivImage))
+            Glide.with(this).load(article.sourceIcon).into(findViewById<ImageView>(R.id.ivSource))
             findViewById<TextView>(R.id.tvSource).text = article.sourceName
             findViewById<TextView>(R.id.tvTitle).text = article.title
             findViewById<TextView>(R.id.tvPublishDate).text = article.pubDate
