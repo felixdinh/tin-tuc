@@ -1,17 +1,17 @@
 package com.example.news.db
 
 import androidx.room.TypeConverter
-import com.example.news.models.Source
+import com.google.gson.Gson
 
 class Converters {
     @TypeConverter
-    fun fromSource(source: Source) : String{
-        return source.name
+    fun  listToJson(list: List<String>): String {
+        return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun toSource(name: String) : Source{
-        return Source(name,name)
+    fun jsonToList(value: String): List<String> {
+        return Gson().fromJson(value, Array<String>::class.java).toList()
     }
 
 }

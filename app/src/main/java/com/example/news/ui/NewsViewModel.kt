@@ -1,5 +1,6 @@
 package com.example.news.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +16,8 @@ class NewsViewModel (
 ) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var breakingNewsPage = 1
+    var prePage:String? = null
+    var nextPage:String? = null
 
     init {
         getBreakingNews("vi")
@@ -23,13 +25,16 @@ class NewsViewModel (
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
+        val response = newsRepository.getBreakingNews(countryCode, nextPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
+                Log.d("TAG", "handleBreakingNewsResponse: ${resultResponse}")
+                prePage = nextPage
+                nextPage = resultResponse.nextPage
                 return Resource.Success(resultResponse)
             }
         }
