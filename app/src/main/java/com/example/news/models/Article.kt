@@ -1,9 +1,9 @@
 package com.example.news.models
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "articles")
 data class Article(
@@ -34,4 +34,4 @@ data class Article(
     val title: String,
     @SerializedName("video_url")
     val videoUrl: String?
-)
+) : Serializable
