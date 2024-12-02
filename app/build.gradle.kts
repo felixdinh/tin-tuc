@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -58,8 +59,6 @@ dependencies {
     val navVersion = "2.8.4"
     implementation ("androidx.navigation:navigation-fragment:$navVersion")
     implementation ("androidx.navigation:navigation-ui:$navVersion")
-    implementation ("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
-
     ///Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     ksp("com.github.bumptech.glide:compiler:4.16.0")
