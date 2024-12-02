@@ -17,5 +17,5 @@ interface ArticleDao {
     fun getArticles() : LiveData<List<Article>>
 
     @Delete
-    fun deleteArticle(article: Article)
+    suspend fun deleteArticle(article: Article)
 }
