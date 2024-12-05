@@ -17,9 +17,11 @@ class NewsViewModel (
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsNextPage:String? = null
+    var breakingNewsResponse: NewsResponse? = null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNextPage:String? = null
+    var searchNewsResponse: NewsResponse? = null
 
     init {
         getBreakingNews("vi")
@@ -41,7 +43,16 @@ class NewsViewModel (
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 breakingNewsNextPage = resultResponse.nextPage
-                return Resource.Success(resultResponse)
+                if(breakingNewsResponse == null){
+                    breakingNewsResponse = resultResponse
+                } else {
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+
+                return Resource.Success(breakingNewsResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -51,7 +62,15 @@ class NewsViewModel (
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 searchNextPage = resultResponse.nextPage
-                return Resource.Success(resultResponse)
+                if(searchNewsResponse == null){
+                    searchNewsResponse = resultResponse
+                } else {
+                    val oldArticles = searchNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(searchNewsResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())

@@ -38,7 +38,7 @@ class ArticleFragment : Fragment() {
         val article = args.article
         binding.webview.apply {
             webViewClient = WebViewClient()
-            loadUrl(article.link)
+            loadUrl(article.link ?: "")
         }
 
         binding.fab.setOnClickListener {

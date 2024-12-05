@@ -2,6 +2,7 @@ package com.example.news.api
 
 import com.example.news.models.NewsResponse
 import com.example.util.Constants.Companion.API_KEY
+import com.example.util.Constants.Companion.QUERY_PAGE_SIZE
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,7 +15,9 @@ interface NewsAPI {
         @Query("page")
         page: String?,
         @Query("apiKey")
-        apiKey: String = API_KEY
+        apiKey: String = API_KEY,
+        @Query("size")
+        pageSize: Int?
     ): Response<NewsResponse>
 
     @GET("api/1/latest")

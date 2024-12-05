@@ -10,28 +10,28 @@ data class Article(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     @SerializedName("article_id")
-    val articleId: String,
-    val category: List<String>,
-    val content: String,
-    val country: List<String>,
+    val articleId: String?,
+    val category: List<String>?,
+    val content: String?,
+    val country: List<String>?,
     val creator: List<String>?,
-    val description: String,
-    val duplicate: Boolean,
+    val description: String?,
+    val duplicate: Boolean?,
     @SerializedName( "image_url")
-    val imageUrl: String,
+    val imageUrl: String?,
     val keywords: List<String>?,
     val language: String?,
-    val link: String,
-    val pubDate: String,
-    val pubDateTZ: String,
-    val sentiment: String,
+    val link: String?,
+    val pubDate: String?,
+    val pubDateTZ: String?,
+    val sentiment: String?,
     @SerializedName("source_icon")
-    val sourceIcon: String,
+    val sourceIcon: String?,
     @SerializedName( "source_name")
-    val sourceName: String,
+    val sourceName: String?,
     @SerializedName("source_url")
-    val sourceUrl: String,
-    val title: String,
+    val sourceUrl: String?,
+    val title: String?,
     @SerializedName("video_url")
     val videoUrl: String?
 ) : Serializable
