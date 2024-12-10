@@ -13,7 +13,6 @@ import com.example.news.databinding.ActivityNewsBinding
 import com.example.news.db.ArticleDatabase
 import com.example.news.db.ArticleDatabase.Companion.invoke
 import com.example.news.repositories.NewsRepository
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NewsActivity : AppCompatActivity() {
     var _binding: ActivityNewsBinding? = null
@@ -30,7 +29,7 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelFactory(newsRepository)
+        val viewModelProviderFactory = NewsViewModelFactory(application, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory)[NewsViewModel::class.java]
         return super.onCreateView(name, context, attrs)
     }
